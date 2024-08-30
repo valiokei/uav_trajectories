@@ -21,24 +21,13 @@ def generate_L_trajectory(start_point, height, distance, num_points, output_file
     x_start, y_start, z_start = start_point
 
     
-    # Generazione del segmento di movimento orizzontale
-    for i in range(1, num_points):
-        x = x_start 
-        y = y_start- distance * i / (num_points - 1)
-        z = height
-        waypoints.append([x, y, z])
-    
-    # Generazione del segmento di ritorno orizzontale
-    for i in range(1, num_points):
-        x = x_start 
-        y = y_start - distance - distance * i / (num_points - 1)
-        z = height
-        waypoints.append([x, y, z])
-    
+    # si è notato che il crazyflie a gestire meglio la traiettoria generata a partire da questo tipo di waypoints almeno in linea retta come in questo caso
 
-    
-    # ritorna allo start point
-    # waypoints.append([x_start, y_start, z_start])
+    waypoints.append([x_start, y_start, height])
+    waypoints.append([x_start, y_start - distance, height])
+    waypoints.append([x_start, y_start, height])
+
+
 
     # Salva i waypoint in un file CSV
     with open(output_file + ".csv", 'w') as f:
